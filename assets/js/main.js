@@ -6,6 +6,27 @@ const CONTACT = {
   phoneLabel: "",
 };
 
+const EN = document.documentElement.lang === "en";
+const T = EN
+  ? {
+      locale: "en-US",
+      people: (n) => `${n} ${n === 1 ? "person" : "people"}`,
+      required: "Please enter your name and phone number.",
+      subject: "Lobby Store quote request",
+      fields: ["Full name", "Phone", "Company / Project", "City", "Venue type", "Model", "Note"],
+      whatsapp: "Opening WhatsApp — just send the message.",
+      mail: "Opening your email app — just send the message.",
+    }
+  : {
+      locale: "tr-TR",
+      people: (n) => `${n} kişi`,
+      required: "Lütfen adınızı ve telefon numaranızı yazın.",
+      subject: "Lobby Store teklif talebi",
+      fields: ["Ad Soyad", "Telefon", "Firma / Proje", "Şehir", "Mekân tipi", "Model", "Not"],
+      whatsapp: "WhatsApp açılıyor — mesajı göndermeniz yeterli.",
+      mail: "E-posta uygulamanız açılıyor — mesajı göndermeniz yeterli.",
+    };
+
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
@@ -71,14 +92,14 @@ const selectTab = (tab) => {
 tabs.forEach((t) => t.addEventListener("click", () => selectTab(t)));
 
 // calculator
-const tl = (n) => "₺ " + n.toLocaleString("tr-TR");
+const tl = (n) => "₺ " + n.toLocaleString(T.locale);
 const rStaff = $("#rStaff");
 const rCost = $("#rCost");
 const fill = (r) => r.style.setProperty("--p", ((r.value - r.min) / (r.max - r.min)) * 100 + "%");
 const calc = () => {
   const staff = +rStaff.value;
   const cost = +rCost.value;
-  $("#oStaff").textContent = `${staff} kişi`;
+  $("#oStaff").textContent = T.people(staff);
   $("#oCost").textContent = tl(cost);
   $("#oYear").textContent = tl(staff * cost * 12);
   fill(rStaff);
@@ -101,30 +122,22 @@ form.addEventListener("submit", (e) => {
   required.forEach((f) => f.classList.toggle("is-bad", !f.value.trim()));
   const bad = required.find((f) => !f.value.trim());
   if (bad) {
-    msg.textContent = "Lütfen adınızı ve telefon numaranızı yazın.";
+    msg.textContent = T.required;
     msg.classList.add("is-err");
     bad.focus();
     return;
   }
   const d = Object.fromEntries(new FormData(form));
-  const text = [
-    "Lobby Store teklif talebi",
-    `Ad Soyad: ${d.name}`,
-    `Telefon: ${d.phone}`,
-    d.company && `Firma / Proje: ${d.company}`,
-    d.city && `Şehir: ${d.city}`,
-    `Mekân tipi: ${d.venue}`,
-    `Model: ${d.model}`,
-    d.note && `Not: ${d.note}`,
-  ].filter(Boolean).join("\n");
+  const values = [d.name, d.phone, d.company, d.city, d.venue, d.model, d.note];
+  const text = [T.subject, ...values.map((v, i) => v && `${T.fields[i]}: ${v}`)].filter(Boolean).join("\n");
 
   msg.classList.remove("is-err");
   if (CONTACT.whatsapp) {
     window.open(`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
-    msg.textContent = "WhatsApp açılıyor — mesajı göndermeniz yeterli.";
+    msg.textContent = T.whatsapp;
   } else {
-    window.location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent("Lobby Store teklif talebi")}&body=${encodeURIComponent(text)}`;
-    msg.textContent = "E-posta uygulamanız açılıyor — mesajı göndermeniz yeterli.";
+    window.location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(T.subject)}&body=${encodeURIComponent(text)}`;
+    msg.textContent = T.mail;
   }
 });
 form.addEventListener("input", (e) => e.target.classList.remove("is-bad"));
