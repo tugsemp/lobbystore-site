@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lobby Store — Personelsiz, tam otomatik market sistemi</title>
+  <meta name="description" content="Lobby Store; tasarımı, yazılımı, kurulumu ve işletmesiyle uçtan uca otomatize edilmiş personelsiz market sistemidir. Otel, rezidans, plaza ve kampüs lobileri için anahtar teslim.">
+  <meta name="theme-color" content="#091835">
+  <meta property="og:title" content="Lobby Store — Personelsiz, tam otomatik market">
+  <meta property="og:description" content="Tasarım, yazılım, kurulum ve işletme tek elden. Lobinizde 7/24 açık, kasiyersiz market.">
+  <meta property="og:image" content="assets/img/store-kiosk.jpg">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/img/store-kiosk.jpg">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="ls-mark" viewBox="48 42 537 1018">
+      <path d="M152 270V207a165 165 0 0 1 330 0v63h-78v-63a87 87 0 0 0-174 0v63z"/>
+      <path d="M48 315h122v623h295V808H318V315h267v120H438v253h147v372H48z"/>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-design" viewBox="0 0 24 24"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-ops" viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 4.5-3.2 7.8-8 9-4.800-1.200-8-4.500-8-9V7z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.500 12.200l2.400 2.400 4.600-4.800" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.500 7.500L12 3l8.500 4.500v9L12 21l-8.500-4.500zM3.500 7.500L12 12l8.500-4.500M12 12v9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12.500V4h8.500L21 13.500 13.500 21z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="7.500" cy="8.500" r="1.300" fill="currentColor"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.500 2h-15zM10 20.500h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5.500" width="18" height="13" rx="2.500" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h18M7 15h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.200 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9.500" r="2.500" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  </defs>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Lobby Store ana sayfa">
+      <svg class="brand__mark" aria-hidden="true"><use href="#ls-mark"/></svg>
+      <span class="brand__word"><b>Lobby</b>Store<sup>®</sup></span>
+    </a>
+    <nav class="nav__links" id="navLinks" aria-label="Ana menü">
+      <a href="#sistem">Sistem</a>
+      <a href="#magaza">Mağaza</a>
+      <a href="#yazilim">Yazılım</a>
+      <a href="#modeller">Modeller</a>
+      <a href="#surec">Süreç</a>
+      <a href="#sss">SSS</a>
+      <a class="btn btn--copper nav__cta-m" href="#iletisim">Teklif Al</a>
+    </nav>
+    <a class="btn btn--copper nav__cta" href="#iletisim">Teklif Al <svg><use href="#i-arrow"/></svg></a>
+    <button class="nav__burger" id="burger" aria-label="Menüyü aç" aria-expanded="false" aria-controls="navLinks"><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="wrap hero__in">
+      <div class="hero__copy">
+        <p class="eyebrow eyebrow--light"><span class="dot"></span> Tam otomatik market sistemi</p>
+        <h1>Kasiyeri yok.<br>Kapanış saati yok.<br><em>Eksiği yok.</em></h1>
+        <p class="hero__lead">Lobby Store; tasarımından yazılımına, kurulumundan günlük işletmesine kadar <strong>uçtan uca otomatize edilmiş</strong> market sistemidir. Siz yeri gösterin — mağaza kendi kendini yönetsin.</p>
+        <div class="hero__cta">
+          <a class="btn btn--copper btn--lg" href="#iletisim">Lokasyonum için teklif al <svg><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--ghost btn--lg" href="#sistem">Sistemi keşfet</a>
+        </div>
+        <ul class="hero__facts">
+          <li><b>7/24</b><span>Kesintisiz satış</span></li>
+          <li><b>0</b><span>Kasa personeli</span></li>
+          <li><b>1</b><span>Panelden tam kontrol</span></li>
+        </ul>
+      </div>
+
+      <div class="hero__visual">
+        <figure class="hero__frame">
+          <img src="assets/img/store-kiosk.jpg" alt="Lobby Store: self-checkout kiosku, soğutucuları ve ada tezgâhıyla personelsiz market" width="1600" height="1062" fetchpriority="high">
+        </figure>
+        <div class="chip chip--a"><span class="pulse"></span><div><b>Kiosk çevrimiçi</b><span>Ödeme almaya hazır</span></div></div>
+        <div class="chip chip--b"><svg><use href="#i-box"/></svg><div><b>Stok senkron</b><span>Raflar panelde canlı</span></div></div>
+        <div class="chip chip--c"><svg><use href="#i-card"/></svg><div><b>Temassız ödeme</b><span>Kart · telefon · saat</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span>Anahtar teslim kurulum</span><i></i><span>Self-checkout</span><i></i><span>Canlı stok takibi</span><i></i><span>Uzaktan yönetim</span><i></i><span>Özel mimari tasarım</span><i></i><span>Tam işletme hizmeti</span><i></i><span>7/24 açık</span><i></i>
+      <span>Anahtar teslim kurulum</span><i></i><span>Self-checkout</span><i></i><span>Canlı stok takibi</span><i></i><span>Uzaktan yönetim</span><i></i><span>Özel mimari tasarım</span><i></i><span>Tam işletme hizmeti</span><i></i><span>7/24 açık</span><i></i>
+    </div>
+  </div>
+
+  <!-- SİSTEM -->
+  <section class="section section--cream" id="sistem">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow">Sistem</p>
+        <h2>Market işletmenin en zor üç şeyini<br class="br-d"> <em>yazılıma devrettik.</em></h2>
+        <p class="lead">Vardiya planı, stok sayımı, kasa açığı… Klasik bir marketi yoran her şey Lobby Store'da otomatik çalışır. Geriye yalnızca iyi tasarlanmış bir mekân ve düzenli akan gelir kalır.</p>
+      </div>
+
+      <div class="shift reveal">
+        <div class="shift__row"><span class="shift__old">Vardiya, izin, devir teslim</span><svg><use href="#i-arrow"/></svg><span class="shift__new">Kasiyersiz, 7/24 açık mağaza</span></div>
+        <div class="shift__row"><span class="shift__old">Elle sayım, biten ürün, boş raf</span><svg><use href="#i-arrow"/></svg><span class="shift__new">Canlı stok ve otomatik sipariş listesi</span></div>
+        <div class="shift__row"><span class="shift__old">Gün sonu kasa, tahmini raporlar</span><svg><use href="#i-arrow"/></svg><span class="shift__new">Her satış anında panelde</span></div>
+      </div>
+
+      <div class="pillars">
+        <article class="pillar reveal">
+          <div class="pillar__ico"><svg><use href="#i-design"/></svg></div>
+          <span class="pillar__no">01</span>
+          <h3>Tasarım</h3>
+          <p>Mekânınıza özel çizilen, bulunduğu lobinin seviyesini yükselten mağaza. Mobilya, aydınlatma, soğutma ve ürün yerleşimi tek projede.</p>
+        </article>
+        <article class="pillar reveal">
+          <div class="pillar__ico"><svg><use href="#i-chip"/></svg></div>
+          <span class="pillar__no">02</span>
+          <h3>Teknoloji</h3>
+          <p>Self-checkout kiosk, ödeme altyapısı ve yönetim yazılımı birbirine bağlı tek sistem olarak gelir. Entegrasyonla siz uğraşmazsınız.</p>
+        </article>
+        <article class="pillar reveal">
+          <div class="pillar__ico"><svg><use href="#i-ops"/></svg></div>
+          <span class="pillar__no">03</span>
+          <h3>İşletme</h3>
+          <p>İsterseniz anahtarı teslim alıp kendiniz işletin, isterseniz ürün tedarikinden raf dolumuna kadar her şeyi bize bırakın.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAĞAZA / GALERİ -->
+  <section class="section section--navy" id="magaza">
+    <div class="wrap">
+      <div class="head head--light reveal">
+        <p class="eyebrow eyebrow--light">Mağaza</p>
+        <h2>Otomat değil.<br><em>Gerçek bir mağaza deneyimi.</em></h2>
+        <p class="lead">Ceviz kaplama, bakır detaylar, mermer tezgâh. Lobby Store bulunduğu mekânın bir köşesini doldurmaz; o mekânın en çok konuşulan noktası olur.</p>
+      </div>
+
+      <div class="show reveal">
+        <div class="show__stage">
+          <img id="showImg" src="assets/img/store-snacks.jpg" alt="Ada tezgâh ve taze ürün vitrini" loading="lazy" width="1600" height="1062">
+          <div class="show__cap">
+            <span id="showNo">01 / 05</span>
+            <h3 id="showTitle">Ada tezgâh ve taze ürün vitrini</h3>
+            <p id="showText">Mağazanın merkezinde, mermer yüzeyli ada. Günlük taze ürünler camın altında, her açıdan görünür.</p>
+          </div>
+        </div>
+        <div class="show__tabs" role="tablist" aria-label="Mağaza görselleri">
+          <button role="tab" aria-selected="true" class="is-on" data-img="assets/img/store-snacks.jpg" data-title="Ada tezgâh ve taze ürün vitrini" data-text="Mağazanın merkezinde, mermer yüzeyli ada. Günlük taze ürünler camın altında, her açıdan görünür."><img src="assets/img/store-snacks.jpg" alt="" loading="lazy"><span>Ada tezgâh</span></button>
+          <button role="tab" aria-selected="false" data-img="assets/img/store-kiosk.jpg" data-title="Self-checkout noktası" data-text="Girişin hemen yanında, dokunmatik ekranlı ödeme kiosku. Ürünü okut, kartı yaklaştır, çık."><img src="assets/img/store-kiosk.jpg" alt="" loading="lazy"><span>Kiosk</span></button>
+          <button role="tab" aria-selected="false" data-img="assets/img/store-coolers.jpg" data-title="Soğutucular ve kahve istasyonu" data-text="Gömme cam kapaklı soğutucular ve tam otomatik kahve makinesi; mobilyanın içine, tek parça gibi yerleşir."><img src="assets/img/store-coolers.jpg" alt="" loading="lazy"><span>Soğutucular</span></button>
+          <button role="tab" aria-selected="false" data-img="assets/img/store-front.jpg" data-title="Dengeli, ferah yerleşim" data-text="Müşteri akışı ada tezgâhın çevresinde döner; her ürün grubu bir bakışta bulunur."><img src="assets/img/store-front.jpg" alt="" loading="lazy"><span>Yerleşim</span></button>
+          <button role="tab" aria-selected="false" data-img="assets/img/store-top.jpg" data-title="Kompakt ayak izi" data-text="Birkaç metrekarelik bir lobi köşesi yeterli. Modül, mekânınızın ölçüsüne göre projelendirilir."><img src="assets/img/store-top.jpg" alt="" loading="lazy"><span>Plan</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALIŞVERİŞ AKIŞI -->
+  <section class="section section--cream" id="nasil">
+    <div class="wrap flow">
+      <div class="flow__copy">
+        <div class="head reveal">
+          <p class="eyebrow">Müşteri deneyimi</p>
+          <h2>Alışveriş <em>üç adım</em>,<br>kuyruk sıfır.</h2>
+          <p class="lead">Misafiriniz gece üçte de gelse aynı deneyimi yaşar: ışıklar açık, raflar dolu, ödeme saniyeler içinde.</p>
+        </div>
+        <ol class="steps">
+          <li class="reveal"><span>1</span><div><h3>İçeri gir</h3><p>Kapı yok, bekleyen yok. Mağaza günün her saatinde alışverişe hazır.</p></div></li>
+          <li class="reveal"><span>2</span><div><h3>Ürününü al</h3><p>Soğuk içecek, atıştırmalık, taze sandviç ya da kahve — raflar düzenli, fiyatlar net.</p></div></li>
+          <li class="reveal"><span>3</span><div><h3>Kioskta öde, çık</h3><p>Barkodu okut, kartını ya da telefonunu yaklaştır. İşlem saniyeler içinde tamam.</p></div></li>
+        </ol>
+      </div>
+      <figure class="flow__img reveal">
+        <img src="assets/img/store-front.jpg" alt="Lobby Store iç mekân: ada tezgâh, raflar ve soğutucular" loading="lazy" width="1320" height="929">
+        <figcaption><svg><use href="#i-card"/></svg> Kuyruk yok, kasa yok, bekleme yok.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- YAZILIM -->
+  <section class="section section--navy section--glow" id="yazilim">
+    <div class="wrap">
+      <div class="head head--light head--center reveal">
+        <p class="eyebrow eyebrow--light">Yazılım</p>
+        <h2>Mağazanın tamamı,<br><em>tek ekranda.</em></h2>
+        <p class="lead">Lobby Store Panel; satışı, stoğu, fiyatı ve cihazları aynı yerden yönetir. Bir mağazanız da olsa elli mağazanız da, masanızdan kalkmadan hepsini görürsünüz.</p>
+      </div>
+
+      <div class="dash reveal" aria-label="Lobby Store Panel temsili arayüz">
+        <div class="dash__bar">
+          <div class="dash__dots"><i></i><i></i><i></i></div>
+          <div class="dash__title"><svg><use href="#ls-mark"/></svg> Lobby Store Panel</div>
+          <div class="dash__live"><span class="pulse"></span> Canlı</div>
+        </div>
+        <div class="dash__body">
+          <aside class="dash__side">
+            <a class="is-on"><svg><use href="#i-chart"/></svg> Genel bakış</a>
+            <a><svg><use href="#i-box"/></svg> Stok</a>
+            <a><svg><use href="#i-tag"/></svg> Fiyat &amp; kampanya</a>
+            <a><svg><use href="#i-card"/></svg> Satışlar</a>
+            <a><svg><use href="#i-bell"/></svg> Uyarılar</a>
+            <a><svg><use href="#i-pin"/></svg> Mağazalar</a>
+          </aside>
+          <div class="dash__main">
+            <div class="kpis">
+              <div class="kpi"><span>Bugünkü ciro</span><b>₺ 48.260</b><em class="up">▲ dünle aynı saate göre</em></div>
+              <div class="kpi"><span>İşlem</span><b>312</b><em>ort. sepet ₺ 154</em></div>
+              <div class="kpi"><span>Raf doluluğu</span><b>%94</b><em>3 ürün kritik seviyede</em></div>
+              <div class="kpi"><span>Cihazlar</span><b>6 / 6</b><em class="up">tümü çevrimiçi</em></div>
+            </div>
+            <div class="dash__grid">
+              <div class="card-d">
+                <header><h4>Saatlik satış</h4><span>Bugün</span></header>
+                <div class="bars" aria-hidden="true">
+                  <i style="--h:18%"></i><i style="--h:12%"></i><i style="--h:9%"></i><i style="--h:14%"></i><i style="--h:38%"></i><i style="--h:62%"></i><i style="--h:74%"></i><i style="--h:58%"></i><i style="--h:81%"></i><i style="--h:66%"></i><i style="--h:49%"></i><i style="--h:71%"></i><i style="--h:92%" class="is-now"></i><i style="--h:0%" class="is-next"></i><i style="--h:0%" class="is-next"></i><i style="--h:0%" class="is-next"></i>
+                </div>
+                <div class="bars__x"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>
+              </div>
+              <div class="card-d">
+                <header><h4>Stok durumu</h4><span>Raf bazında</span></header>
+                <ul class="stock">
+                  <li><span>Soğuk içecek</span><div><i style="--w:96%"></i></div><b>%96</b></li>
+                  <li><span>Atıştırmalık</span><div><i style="--w:88%"></i></div><b>%88</b></li>
+                  <li><span>Taze ürün</span><div><i style="--w:41%" class="warn"></i></div><b>%41</b></li>
+                  <li><span>Çikolata</span><div><i style="--w:79%"></i></div><b>%79</b></li>
+                </ul>
+                <div class="alert-d"><svg><use href="#i-bell"/></svg><div><b>Taze ürün rafı azalıyor</b><span>Sipariş listesine otomatik eklendi</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="dash__note">Temsili arayüz — ekrandaki veriler örnektir.</p>
+      </div>
+
+      <div class="feats">
+        <article class="feat reveal"><svg><use href="#i-box"/></svg><h3>Canlı stok</h3><p>Her satış stoktan anında düşer. Hangi rafta ne kaldığını saymadan bilirsiniz.</p></article>
+        <article class="feat reveal"><svg><use href="#i-bell"/></svg><h3>Akıllı uyarılar</h3><p>Azalan ürün, çevrimdışı cihaz, olağan dışı hareket — sorun büyümeden haberiniz olur.</p></article>
+        <article class="feat reveal"><svg><use href="#i-tag"/></svg><h3>Uzaktan fiyat ve kampanya</h3><p>Fiyatı, indirimi, ürün gamını tek tıkla güncelleyin; tüm mağazalarınıza aynı anda yansısın.</p></article>
+        <article class="feat reveal"><svg><use href="#i-chart"/></svg><h3>Net raporlar</h3><p>Saat saat ciro, en çok satanlar, kârlılık. Kararı tahminle değil veriyle verirsiniz.</p></article>
+        <article class="feat reveal"><svg><use href="#i-card"/></svg><h3>Entegre ödeme</h3><p>Kiosk, POS ve yazılım tek sistemdir. Gün sonu mutabakatı kendiliğinden kapanır.</p></article>
+        <article class="feat reveal"><svg><use href="#i-pin"/></svg><h3>Çoklu lokasyon</h3><p>Yeni mağaza açmak yeni bir sistem kurmak değildir; panele bir satır daha eklemektir.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODELLER -->
+  <section class="section section--cream" id="modeller">
+    <div class="wrap">
+      <div class="head head--center reveal">
+        <p class="eyebrow">İş modelleri</p>
+        <h2>Sahibi siz olun.<br><em>Yükü kim taşısın, siz seçin.</em></h2>
+        <p class="lead">Her iki modelde de aynı mağaza, aynı yazılım, aynı kalite. Fark yalnızca günlük işletmeyi kimin yürüttüğünde.</p>
+      </div>
+
+      <div class="models">
+        <article class="model reveal">
+          <span class="model__tag">Model 01</span>
+          <h3>Anahtar Teslim</h3>
+          <p class="model__sub">Biz kurarız, siz işletirsiniz.</p>
+          <ul>
+            <li><svg><use href="#i-check"/></svg> Mekâna özel mimari proje</li>
+            <li><svg><use href="#i-check"/></svg> Mobilya, soğutma ve kiosk kurulumu</li>
+            <li><svg><use href="#i-check"/></svg> Lobby Store Panel lisansı</li>
+            <li><svg><use href="#i-check"/></svg> Ekip eğitimi ve açılış desteği</li>
+            <li><svg><use href="#i-check"/></svg> Teknik destek ve yazılım güncellemeleri</li>
+          </ul>
+          <p class="model__for"><b>Kimin için:</b> Kendi operasyon ekibi olan oteller, perakendeciler ve yatırımcılar.</p>
+          <a class="btn btn--navy" href="#iletisim" data-model="Anahtar Teslim">Bu model için teklif al <svg><use href="#i-arrow"/></svg></a>
+        </article>
+
+        <article class="model model--hero reveal">
+          <span class="model__badge">Sıfır operasyon yükü</span>
+          <span class="model__tag">Model 02</span>
+          <h3>Tam İşletme</h3>
+          <p class="model__sub">Biz kurarız, biz işletiriz. Siz kazancı izlersiniz.</p>
+          <ul>
+            <li><svg><use href="#i-check"/></svg> Anahtar Teslim modelindeki her şey</li>
+            <li><svg><use href="#i-check"/></svg> Ürün tedariki ve kategori yönetimi</li>
+            <li><svg><use href="#i-check"/></svg> Düzenli raf dolumu ve temizlik</li>
+            <li><svg><use href="#i-check"/></svg> Cihaz bakımı ve arıza müdahalesi</li>
+            <li><svg><use href="#i-check"/></svg> Şeffaf aylık rapor ve hakediş</li>
+          </ul>
+          <p class="model__for"><b>Kimin için:</b> Lobisine değer katmak isteyen ama market işletmekle uğraşmak istemeyen mülk sahipleri.</p>
+          <a class="btn btn--copper" href="#iletisim" data-model="Tam İşletme">Bu model için teklif al <svg><use href="#i-arrow"/></svg></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- HESAPLAYICI -->
+  <section class="section section--navy" id="hesapla">
+    <div class="wrap calc">
+      <div class="calc__copy reveal">
+        <p class="eyebrow eyebrow--light">Hesaplayın</p>
+        <h2>Kasiyerli bir market<br><em>size neye mal olur?</em></h2>
+        <p class="lead">7/24 açık klasik bir market, yalnızca kasada birinin durması için ciddi bir bütçe ister. Kendi rakamlarınızı girin; Lobby Store'da bu kalemin neden olmadığını görün.</p>
+        <p class="calc__fine">Hesaplama yalnızca girdiğiniz değerlerin çarpımıdır; tahmini bir karşılaştırmadır, teklif niteliği taşımaz.</p>
+      </div>
+      <div class="calc__box reveal">
+        <label class="range">
+          <span>Vardiyalı kasa personeli <output id="oStaff">4 kişi</output></span>
+          <input type="range" id="rStaff" min="1" max="8" step="1" value="4">
+        </label>
+        <label class="range">
+          <span>Kişi başı aylık toplam maliyet <output id="oCost">₺ 50.000</output></span>
+          <input type="range" id="rCost" min="30000" max="120000" step="2500" value="50000">
+        </label>
+        <div class="calc__res">
+          <div><span>Klasik market · yıllık personel gideri</span><b id="oYear">₺ 2.400.000</b></div>
+          <div class="calc__zero"><span>Lobby Store · kasa personeli gideri</span><b>₺ 0</b></div>
+        </div>
+        <a class="btn btn--copper btn--block" href="#iletisim">Gerçek rakamları konuşalım <svg><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEKANLAR -->
+  <section class="section section--cream" id="mekanlar">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow">Nerelere kurulur</p>
+        <h2>İnsanın olduğu her lobide<br><em>bir Lobby Store'a yer var.</em></h2>
+      </div>
+      <div class="venues">
+        <article class="venue reveal"><span>01</span><h3>Oteller</h3><p>Minibardan fazlası, oda servisinden hızlısı. Misafir gecenin her saatinde ihtiyacını lobiden karşılar.</p></article>
+        <article class="venue reveal"><span>02</span><h3>Rezidans ve siteler</h3><p>Sakinlere en yakın market, kendi binalarının girişi olur. Mülkün değerine değer katar.</p></article>
+        <article class="venue reveal"><span>03</span><h3>Plaza ve ofisler</h3><p>Çalışanlar binadan çıkmadan kahvesini, öğle arasını, akşam mesaisini çözer.</p></article>
+        <article class="venue reveal"><span>04</span><h3>Hastaneler</h3><p>Refakatçi ve personel için saatten bağımsız, hijyenik, temassız alışveriş.</p></article>
+        <article class="venue reveal"><span>05</span><h3>Kampüs ve yurtlar</h3><p>Sınav haftasında da tatilde de açık. Öğrenci ne zaman isterse.</p></article>
+        <article class="venue reveal"><span>06</span><h3>Terminal ve AVM'ler</h3><p>Yoğun geçiş noktalarında, personel yükü olmadan gece gündüz çalışan satış alanı.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SÜREÇ -->
+  <section class="section section--white" id="surec">
+    <div class="wrap">
+      <div class="head head--center reveal">
+        <p class="eyebrow">Süreç</p>
+        <h2>İlk görüşmeden ilk satışa,<br><em>beş net adım.</em></h2>
+      </div>
+      <ol class="line">
+        <li class="reveal"><span>01</span><h3>Keşif</h3><p>Mekânınızı, trafiğinizi ve hedefinizi dinleriz. Size uygun modeli birlikte belirleriz.</p></li>
+        <li class="reveal"><span>02</span><h3>Tasarım</h3><p>Mağaza, alanınızın ölçülerine göre çizilir; görselleri onayınıza sunulur.</p></li>
+        <li class="reveal"><span>03</span><h3>Üretim ve kurulum</h3><p>Mobilya, soğutma, kiosk ve altyapı ekibimizce yerinde kurulur.</p></li>
+        <li class="reveal"><span>04</span><h3>Devreye alma</h3><p>Ürünler tanımlanır, sistem test edilir, raflar dolar. Mağaza açılır.</p></li>
+        <li class="reveal"><span>05</span><h3>İşletme ve destek</h3><p>Seçtiğiniz modele göre ya biz işletiriz ya da arkanızda dururuz.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- SSS -->
+  <section class="section section--cream" id="sss">
+    <div class="wrap faq">
+      <div class="head reveal">
+        <p class="eyebrow">Sık sorulanlar</p>
+        <h2>Aklınızdaki<br><em>sorular.</em></h2>
+        <p class="lead">Burada yanıtını bulamadığınız her şey için bize yazın; en kısa sürede dönüş yaparız.</p>
+        <a class="btn btn--navy" href="#iletisim">Soru sor <svg><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="faq__list reveal">
+        <details open><summary>Mağazada gerçekten hiç personel olmuyor mu?</summary><p>Satış ve ödeme tamamen otomatiktir; kasada kimse durmaz. Personel yalnızca raf dolumu ve temizlik için belirli aralıklarla uğrar. Tam İşletme modelinde bu ziyaretleri de biz planlar ve yaparız.</p></details>
+        <details><summary>Ne kadarlık bir alana ihtiyaç var?</summary><p>Lobby Store modülerdir; küçük bir lobi köşesinden geniş bir mağaza alanına kadar ölçeklenir. Keşif görüşmesinde alanınızın ölçüsünü alır, size özel yerleşim planı çıkarırız.</p></details>
+        <details><summary>Yazılımı tek başına satın alabilir miyim?</summary><p>Lobby Store'un gücü, tasarım, donanım ve yazılımın birlikte çalışmasından gelir; bu yüzden sistemi bir bütün olarak kuruyoruz. Mevcut bir mağazanız varsa dönüşüm seçeneklerini birlikte değerlendirebiliriz.</p></details>
+        <details><summary>Ürün gamını kim belirliyor?</summary><p>Anahtar Teslim modelinde tamamen siz. Tam İşletme modelinde kategori yönetimini biz yaparız; satış verisine göre rafı sürekli iyileştirir, mekânınızın kitlesine uygun gamı oluştururuz.</p></details>
+        <details><summary>Birden fazla lokasyonda açabilir miyim?</summary><p>Evet. Tüm mağazalarınız aynı panelden yönetilir; fiyat, kampanya ve raporlar tek merkezden kontrol edilir.</p></details>
+        <details><summary>Kurulum ne kadar sürer, maliyeti nedir?</summary><p>İkisi de alanın büyüklüğüne ve seçtiğiniz modele göre değişir. Keşif görüşmesinin ardından net bir takvim ve fiyat teklifi sunuyoruz; sürpriz kalem olmaz.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- İLETİŞİM -->
+  <section class="section section--navy cta" id="iletisim">
+    <div class="cta__img" aria-hidden="true"></div>
+    <div class="wrap cta__in">
+      <div class="cta__copy reveal">
+        <p class="eyebrow eyebrow--light">Teklif alın</p>
+        <h2>Lobinizdeki boş köşe,<br><em>en kârlı metrekareniz olabilir.</em></h2>
+        <p class="lead">Formu doldurun; mekânınıza özel yerleşim önerisi ve fiyat teklifiyle size dönelim.</p>
+        <ul class="cta__list">
+          <li><svg><use href="#i-check"/></svg> Keşif görüşmesi ve ön fizibilite</li>
+          <li><svg><use href="#i-check"/></svg> Mekânınıza özel tasarım önerisi</li>
+          <li><svg><use href="#i-check"/></svg> Net fiyat, net takvim</li>
+        </ul>
+      </div>
+
+      <form class="form reveal" id="leadForm" novalidate>
+        <h3>Sizi arayalım</h3>
+        <div class="form__row">
+          <label>Ad Soyad<input type="text" name="name" autocomplete="name" required></label>
+          <label>Telefon<input type="tel" name="phone" autocomplete="tel" inputmode="tel" required></label>
+        </div>
+        <div class="form__row">
+          <label>Firma / Proje<input type="text" name="company" autocomplete="organization"></label>
+          <label>Şehir<input type="text" name="city" autocomplete="address-level2"></label>
+        </div>
+        <div class="form__row">
+          <label>Mekân tipi
+            <select name="venue">
+              <option>Otel</option><option>Rezidans / Site</option><option>Plaza / Ofis</option><option>Hastane</option><option>Kampüs / Yurt</option><option>Terminal / AVM</option><option>Diğer</option>
+            </select>
+          </label>
+          <label>İlgilendiğiniz model
+            <select name="model" id="fModel">
+              <option>Tam İşletme</option><option>Anahtar Teslim</option><option>Henüz karar vermedim</option>
+            </select>
+          </label>
+        </div>
+        <label><span>Notunuz <small>(isteğe bağlı)</small></span><textarea name="note" rows="3"></textarea></label>
+        <button class="btn btn--copper btn--lg btn--block" type="submit">Teklif talebini gönder <svg><use href="#i-arrow"/></svg></button>
+        <p class="form__msg" id="formMsg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div class="foot__brand">
+      <a class="brand" href="#top" aria-label="Lobby Store">
+        <svg class="brand__mark" aria-hidden="true"><use href="#ls-mark"/></svg>
+        <span class="brand__word"><b>Lobby</b>Store<sup>®</sup></span>
+      </a>
+      <p>Tasarımı, yazılımı, kurulumu ve işletmesiyle uçtan uca otomatize market sistemi.</p>
+    </div>
+    <nav aria-label="Alt menü">
+      <h4>Ürün</h4>
+      <a href="#sistem">Sistem</a><a href="#magaza">Mağaza</a><a href="#yazilim">Yazılım</a><a href="#modeller">Modeller</a>
+    </nav>
+    <nav aria-label="Alt menü 2">
+      <h4>Şirket</h4>
+      <a href="#surec">Süreç</a><a href="#mekanlar">Kullanım alanları</a><a href="#sss">SSS</a><a href="#iletisim">İletişim</a>
+    </nav>
+    <div class="foot__contact" id="footContact">
+      <h4>İletişim</h4>
+      <a href="#iletisim">Teklif formu</a>
+    </div>
+  </div>
+  <div class="wrap foot__base">
+    <span>© <span id="year">2026</span> Lobby Store. Tüm hakları saklıdır.</span>
+    <span>Görseller tasarım çalışmasıdır.</span>
+  </div>
+</footer>
+
+<a class="sticky-cta" href="#iletisim" id="stickyCta">Teklif Al <svg><use href="#i-arrow"/></svg></a>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
